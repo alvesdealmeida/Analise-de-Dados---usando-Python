@@ -1,0 +1,79 @@
+#passo a passo (logica de programação) como eu resolveria isso?
+
+# 1 importar a base de dados
+import pandas
+
+tabela = pd.read_csv("telecom_users.csv") # o arquivo csv esteja dentro da pasta do jupyter
+
+# 2 visualizar a base de dados:
+tabela = tabela.drop("unnamed: 0", axis=1)
+display(table)
+
+#   objetivo 1 : entender as iformações disponíveis
+churn dos cliente (cancelamento)
+#   objetivo 2 : descobrir os erros (cagadas) na base de dados(tratar)
+
+
+# 3 tratamento de dados: 
+# valores que estão reconhecidos de forma errada
+tabela =["TotalGasto"] = pd.to_numeric(tabela["TotalGasto"],errors="coerce")
+
+# valores vazios
+
+#deletando as colunas vazias
+tabela = tabela.dropna(how="all", axix=1)
+
+#deletando as linhas
+tabela = tabela.dropna(how="any", axix=0)
+
+print(tabela.info())
+
+# 4 análise inicial
+#como estão nossos cancelamentos?
+print(tabela["Churn"].value_counts())
+print(tabela["Churn"].value_counts(normalize=True).map("{:.1%}".format))
+
+# 5 análise completa
+#comparar cada coluna da tabela com a coluna de cancelamento
+import plotly.express as px
+# etapa 1 criar o grafico
+for coluna in tabela.columns:
+	#para edicoes: https://plotly.com/phyton/histogram
+	#mudar cor : color_discrete_sequence=["blue,"green"]
+	grafico = px.histogram(tabela, x="coluna", color="Churn")
+	# etapa 2 exibir o grafico
+	grafico.show()
+--------------------------------
+#Escrever as conclusoes:
+cliente com contrato mensal tem mais chances de cancelar;
+>fazer promocoes para cliente ir par o contrato anual
+cliente sexo fenimino e masculino:
+>sem impacto
+Aposentados: não e sim : 1 para 3 : maioria nao aposentado
+> nao salta os olhos...talvez
+Casados: quem é casado e quem não e casado:
+não casado tem dobro de não casado
+Familias maiores tendem a cancelar menos do que familia menores
+>>podemos fazer promoçoes a pessoa pegar um linha adicional de telefone
+
+Mese como clente baixos tem muitos cancelamentos.
+Clientes com pouco tempo como cliente tendem a cancelar muito
+>>a primeira experiencia do cliente na operadora pode ser ruim
+>> talvez a captação de clientes tá trazendo clientes desqualificados
+>> ideia: a gente pode criar incentivo pro cara ficar mais tempo como cliente
+
+quantomais serviços o cara tem , menos chances de cancelar
+>>ideia: podemos fazer promoçoes com mais serviços pro cliente
+
+tem alguma coisa no nosso serviço de fibra que ta fazendo os 
+clientes cancelarem
+>>agir sobre a fibra
+
+Ciente no boleto tem muito mais chances de canclearem
+temos que fazer alguma ação pra alguma ação para els irem pra as outra
+formas de pagamento
+
+
+
+-----------------------------------------------------------
+!pip install plotly
