@@ -1,7 +1,7 @@
 #passo a passo (logica de programação) como eu resolveria isso?
 
 # 1 importar a base de dados
-im port pandas
+import pandas
 
 tabela = pd.read_csv("telecom_users.csv") # o arquivo csv esteja dentro da pasta do jupyter
 
